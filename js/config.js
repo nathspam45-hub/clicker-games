@@ -10,7 +10,7 @@ const AppConfig = {
     ? window.location.origin + '/game.html'
     : 'http://localhost/game.html',
   // Si vous voulez forcer une URL OAuth complète, définissez-la ici (ex: l'URL fournie)
-  oauthUrl: null
+  oauthUrl: 'https://nathspam45-hub.github.io/clicker-games/game.html'
 };
 
 // Si l'utilisateur a fourni une URL OAuth complète (ou pas), construire
