@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>⛏ Mine Clicker — Jeu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="game-page">
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">⛏ MINE CLICKER</div>
+  <div class="nav-links">
+    <a href="game.html" class="nav-link active">🎮 Jeu</a>
+    <a href="leaderboard.html" class="nav-link">🏆 Classement</a>
+  </div>
+  <div class="nav-user" id="nav-user">
+    <div class="user-avatar" id="user-avatar">?</div>
+    <span id="user-name">Invité</span>
+    <button class="logout-btn" onclick="logout()">Déco</button>
+  </div>
+</nav>
+
+<!-- MAIN GAME LAYOUT -->
+<div class="game-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="panel panel-left">
+    <div class="gem-display">
+      <div class="gem-big">💎</div>
+      <div class="gem-amount" id="gem-count">0</div>
+      <div class="gem-label">gemmes</div>
+      <div class="gem-rate" id="gem-rate">0.0 / sec</div>
+    </div>
+
+    <button class="mine-btn" id="mine-btn">
+      <span class="mine-btn-inner">⛏️</span>
+      <div class="mine-shine"></div>
+    </button>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-val" id="stat-clicks">0</div>
+        <div class="stat-lbl">clics</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-mult">x1</div>
+        <div class="stat-lbl">/clic</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-total">0</div>
+        <div class="stat-lbl">total</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-prestige">⭐0</div>
+        <div class="stat-lbl">prestige</div>
+      </div>
+    </div>
+
+    <div class="prestige-section">
+      <div class="prestige-header">
+        <span>PRESTIGE</span>
+        <span id="prestige-need">10k nécessaires</span>
+      </div>
+      <div class="prestige-bar-wrap">
+        <div class="prestige-bar-fill" id="prestige-fill"></div>
+      </div>
+      <button class="prestige-btn" id="prestige-btn" disabled onclick="prestige()">
+        ⭐ PRESTIGE — RESET + BONUS
+      </button>
+    </div>
+  </div>
+
+  <!-- MIDDLE PANEL -->
+  <div class="panel panel-mid">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="setTab('upgrades',this)">⚡ Amélios</button>
+      <button class="tab-btn" onclick="setTab('autos',this)">🤖 Autos</button>
+      <button class="tab-btn" onclick="setTab('stats',this)">📊 Stats</button>
+    </div>
+
+    <div id="tab-upgrades" class="tab-content">
+      <div class="upgrades-grid" id="upg-grid"></div>
+    </div>
+
+    <div id="tab-autos" class="tab-content" style="display:none">
+      <div id="auto-list"></div>
+    </div>
+
+    <div id="tab-stats" class="tab-content" style="display:none">
+      <div class="stats-panel" id="stats-panel"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel panel-right">
+    <div class="panel-title">🏗 BÂTIMENTS</div>
+    <div id="building-list"></div>
+  </div>
+
+</div>
+
+<!-- FLOAT CONTAINER -->
+<div id="float-container" style="position:fixed;top:0;left:0;pointer-events:none;z-index:999;"></div>
+
+<!-- NOTIFICATION -->
+<div id="notif"></div>
+
+<!-- PRESTIGE MODAL -->
+<div id="prestige-modal" class="modal" style="display:none">
+  <div class="modal-box">
+    <div style="font-size:40px;text-align:center;margin-bottom:12px">⭐</div>
+    <h2 style="text-align:center;margin-bottom:12px">PRESTIGE !</h2>
+    <p style="font-size:9px;color:#aaa;line-height:2;text-align:center">Tu vas tout perdre mais gagner un bonus permanent de <span style="color:#ffd700">+50%</span> or par étoile de prestige.<br><br>Tu seras au prestige <span id="next-prestige" style="color:#e94560">?</span> après ce reset.</p>
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="modal-btn primary" onclick="confirmPrestige()">✅ CONFIRMER</button>
+      <button class="modal-btn" onclick="document.getElementById('prestige-modal').style.display='none'">❌ Annuler</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    initGame();
+  });
+
+  function setTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.style.display='none');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-'+name).style.display='block';
+    btn.classList.add('active');
+    if(name==='stats') renderStats();
+  }
+
+  function prestige() {
+    document.getElementById('next-prestige').textContent = (G.prestige+1);
+    document.getElementById('prestige-modal').style.display='flex';
+  }
+</script>
+</body>
+</html>

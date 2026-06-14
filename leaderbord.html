@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>⛏ Mine Clicker — Classement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="leaderboard-page">
+
+<nav class="navbar">
+  <div class="nav-logo">⛏ MINE CLICKER</div>
+  <div class="nav-links">
+    <a href="game.html" class="nav-link">🎮 Jeu</a>
+    <a href="leaderboard.html" class="nav-link active">🏆 Classement</a>
+  </div>
+  <div class="nav-user" id="nav-user">
+    <div class="user-avatar" id="user-avatar">?</div>
+    <span id="user-name">Invité</span>
+    <button class="logout-btn" onclick="logout()">Déco</button>
+  </div>
+</nav>
+
+<div class="lb-container">
+
+  <div class="lb-header">
+    <div class="lb-trophy">🏆</div>
+    <h1 class="lb-title">CLASSEMENT MONDIAL</h1>
+    <p class="lb-sub">Les meilleurs mineurs de la planète</p>
+  </div>
+
+  <div class="lb-tabs">
+    <button class="lb-tab active" onclick="setLbTab('total',this)">💎 Total</button>
+    <button class="lb-tab" onclick="setLbTab('prestige',this)">⭐ Prestige</button>
+    <button class="lb-tab" onclick="setLbTab('clicks',this)">🖱️ Clics</button>
+  </div>
+
+  <div class="lb-podium" id="lb-podium"></div>
+
+  <div class="lb-table-wrap">
+    <table class="lb-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Joueur</th>
+          <th>Gemmes totales</th>
+          <th>Prestige</th>
+          <th>Clics</th>
+          <th>Bâtiments</th>
+        </tr>
+      </thead>
+      <tbody id="lb-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="lb-me-wrap" id="lb-me-wrap" style="display:none">
+    <div class="lb-me-title">📍 Ta position</div>
+    <div class="lb-me-card" id="lb-me-card"></div>
+  </div>
+
+  <div class="lb-footer">
+    <p>Le classement se met à jour à chaque sauvegarde automatique (toutes les 30s)</p>
+    <button class="lb-refresh-btn" onclick="loadLeaderboard()">🔄 Actualiser</button>
+  </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/leaderboard.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    loadLeaderboard();
+    updateNavUser();
+  });
+
+  let currentTab = 'total';
+
+  function setLbTab(tab, btn) {
+    currentTab = tab;
+    document.querySelectorAll('.lb-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadLeaderboard();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>⛏ Mine Clicker — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="login-page">
+
+  <div class="particles" id="particles"></div>
+
+  <div class="login-container">
+    <div class="login-logo">⛏️</div>
+    <h1 class="login-title">MINE CLICKER</h1>
+    <p class="login-sub">Le meilleur clicker minier du web</p>
+
+    <div class="login-card">
+      <p class="login-desc">Connecte-toi avec ton compte Discord pour sauvegarder ta progression et apparaître dans le classement mondial !</p>
+
+      <button class="discord-btn" onclick="loginDiscord()">
+        <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.59 1.34A18.18 18.18 0 0 0 14.04 0c-.2.35-.42.82-.58 1.19a16.84 16.84 0 0 0-5.04 0A12.38 12.38 0 0 0 7.85 0 18.22 18.22 0 0 0 3.3 1.35 19.3 19.3 0 0 0 .07 13.6a18.35 18.35 0 0 0 5.6 2.84c.46-.62.86-1.28 1.2-1.98a11.9 11.9 0 0 1-1.89-.91c.16-.11.31-.23.46-.35a13.08 13.08 0 0 0 11.12 0c.15.12.3.24.46.35-.6.36-1.23.67-1.9.91.35.7.75 1.36 1.21 1.98a18.3 18.3 0 0 0 5.61-2.84 19.24 19.24 0 0 0-3.35-12.26ZM7.34 11.15c-1.08 0-1.97-.99-1.97-2.22s.87-2.23 1.97-2.23 1.99.99 1.97 2.23c0 1.23-.88 2.22-1.97 2.22Zm7.32 0c-1.08 0-1.97-.99-1.97-2.22s.87-2.23 1.97-2.23 1.98.99 1.97 2.23c0 1.23-.87 2.22-1.97 2.22Z" fill="white"/>
+        </svg>
+        Se connecter avec Discord
+      </button>
+
+      <div class="or-divider"><span>ou</span></div>
+
+      <button class="guest-btn" onclick="loginGuest()">
+        Jouer en invité (sans sauvegarde)
+      </button>
+    </div>
+
+    <div class="login-footer">
+      <a href="leaderboard.html">🏆 Voir le classement</a>
+      <span>·</span>
+      <span>v1.0.0</span>
+    </div>
+  </div>
+
+  <!-- Discord OAuth Config Modal -->
+  <div id="config-modal" class="modal" style="display:none">
+    <div class="modal-box">
+      <h2>⚙️ Configuration Discord</h2>
+      <p style="font-size:9px;color:#aaa;margin:10px 0 16px;line-height:1.8">Pour activer la connexion Discord, configure ton <strong>Client ID</strong> dans <code>js/config.js</code> et ton <strong>Redirect URI</strong> dans le portail Discord.</p>
+      <div class="config-field">
+        <label>Client ID</label>
+        <input type="text" id="client-id-input" placeholder="Ton Discord Client ID" />
+      </div>
+      <div class="config-field">
+        <label>Redirect URI</label>
+        <input type="text" id="redirect-input" value="http://localhost/game.html" />
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="modal-btn primary" onclick="saveConfig()">Sauvegarder</button>
+        <button class="modal-btn" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Particles background
+    const container = document.getElementById('particles');
+    const icons = ['⛏️','💎','🪨','✨','⚙️','🔮','🪙','💰'];
+    for(let i=0;i<20;i++){
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = icons[Math.floor(Math.random()*icons.length)];
+      p.style.left = Math.random()*100+'%';
+      p.style.top = Math.random()*100+'%';
+      p.style.animationDelay = (Math.random()*6)+'s';
+      p.style.animationDuration = (4+Math.random()*6)+'s';
+      p.style.fontSize = (10+Math.random()*20)+'px';
+      container.appendChild(p);
+    }
+
+    // Check if already logged in
+    window.addEventListener('load', () => {
+      const user = getUser();
+      if(user) window.location.href = 'game.html';
+    });
+  </script>
+</body>
+</html>
